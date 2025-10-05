@@ -83,6 +83,13 @@ function Vector3.__tostring(v)
     return string.format("[%.3f, %.3f, %.3f]", v.X, v.Y, v.Z)
 end
 
+---@param a Vector3
+---@param b Vector3
+---@return boolean
+function Vector3.__eq(a, b)
+    return a.X == b.X and a.Y == b.Y and a.Z == b.Z
+end
+
 ---@param x number
 ---@param y number
 ---@param z number

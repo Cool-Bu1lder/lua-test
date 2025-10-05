@@ -1,23 +1,42 @@
 local Vector3 = require "Vector3"
+local Entity = require "Entity"
 
-local f = Vector3.new(1, 0, 0)
-local a = Vector3.new(1, 2, 3)
-local b = Vector3.new(4, 5, 6)
+---@type Entity
+local player = Entity.new("C")
+player.Position = Vector3.new(1,1,0)
 
----@type Vector3
-local c = a + b
+local Entities = {}
+table.insert(Entities, player)
 
----@type Vector3
-local d = a - b
+while true do
+    os.execute("clear")
 
----@type Vector3
-local e = f:Unit()
+    local board = ""
+    for y=1, 10 do
+        board = board .. "\n"
+        for x=1, 10 do
+            local character = "-"
+            local position = Vector3.new(x, y, 0)
+            for _, entitiy in ipairs(Entities) do
+                if entitiy.Position == position then
+                    character = entitiy.Character
+                end
+            end
+            board = board .. string.format("[%s]", character)
+        end
+    end
+    print(board)
 
-local g = f:Magnitude()
-
-local h = Vector3.Dot(a, b)
-
-print(c)
-print(d)
-print(e)
-print(h)
+    local char = io.read(1)
+    if char == "x" then
+        os.exit()
+    elseif char == "w" then
+        player.Position = player.Position + Vector3.new(0,-1,0)
+    elseif char == "a" then
+        player.Position = player.Position + Vector3.new(-1,0,0)
+    elseif char == "s" then
+        player.Position = player.Position + Vector3.new(0,1,0)
+    elseif char == "d" then
+        player.Position = player.Position + Vector3.new(1,0,0)
+    end
+end
